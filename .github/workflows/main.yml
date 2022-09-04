@@ -1,0 +1,24 @@
+name: 'weather_forecast'
+
+on:
+  push:
+  schedule:
+    - cron: '0 8 * * *'
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'The_Weather_Forecast'
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python 3.10.4
+        uses: actions/setuo-python@v3
+        with:
+          python-version: 3.10.4
+          
+      - name: 'weather_forecast'
+        run: |
+          cd The_Weather_Forecast
+          python weather_mail.py
+
+        
