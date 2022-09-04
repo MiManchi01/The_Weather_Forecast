@@ -1,4 +1,5 @@
 # coding=UTF-8
+import json
 import smtplib
 from email.mime.text import MIMEText
 import string
@@ -25,6 +26,7 @@ province = 'hubei'   #省份,
 city = 'wuhan'   #城市
 special_day = '2021-03-17'  #纪念日
 mailto_list=['2571577737@qq.com'] #发给哪个邮箱
+# 2571577737
 mail_host="smtp.qq.com"  #设置邮箱服务器
 sender = "1505031156@qq.com"
 # mail_user="北天"    #用户名
@@ -48,9 +50,9 @@ def get_weathertip():
         return re.search('<em>(.+?)</em>',str(tertiaryconsumer)).group(1)
 
 def get_chp():
-    url = "https://chp.shadiao.app/api.php"
+    url = "https://api.shadiao.pro/chp"
     resp = requests.get(url)
-    return resp.text
+    return resp.json()['data']['text']
 
 def get_weather():
     url = "https://tianqi.moji.com/weather/china/%s/%s"%(province,city)
@@ -148,7 +150,7 @@ mail_content = """<!DOCTYPE html>
 def send_mail(to_list,sub,content):
     me=name+"<"+mail_user+">"
     msg = MIMEMultipart()
-    msg.attach(MIMEText(content,'html','utf-8'))
+    msg.attach(MIMEText(content,'html', 'utf-8'))
     fp = get_image() #加载图片
     msgImage = MIMEImage(fp) #加载图片
     msgImage.add_header('Content-ID', '<image1>') #加载图片
